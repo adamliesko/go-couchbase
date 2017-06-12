@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/couchbase/go-couchbase"
+	"github.com/adamliesko/go-couchbase"
 	"log"
 )
 

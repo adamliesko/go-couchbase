@@ -2,7 +2,7 @@
 
 This is a *unoffical* version of a Couchbase Golang client. If you are
 looking for the *Offical* Couchbase Golang client please see
-    [CB-go])[https://github.com/couchbaselabs/gocb].
+    [CB-go])[https://github.com/adamlieskolabs/gocb].
 
 This is an evolving package, but does provide a useful interface to a
 [couchbase](http://www.couchbase.com/) server including all of the
@@ -15,7 +15,7 @@ don't bang on all one node to do all the work.
 
 ## Install
 
-    go get github.com/couchbase/go-couchbase
+    go get github.com/adamliesko/go-couchbase
 
 ## Example
 

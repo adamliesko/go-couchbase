@@ -35,8 +35,8 @@ import (
 	"time"
 	"unsafe"
 
-	"github.com/couchbase/gomemcached"
-	"github.com/couchbase/gomemcached/client" // package name is 'memcached'
+	"github.com/adamliesko/gomemcached"
+	"github.com/adamliesko/gomemcached/client" // package name is 'memcached'
 	"github.com/couchbase/goutils/logging"
 )
 

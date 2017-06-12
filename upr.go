@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"fmt"
-	"github.com/couchbase/gomemcached"
-	"github.com/couchbase/gomemcached/client"
+	"github.com/adamliesko/gomemcached"
+	"github.com/adamliesko/gomemcached/client"
 	"github.com/couchbase/goutils/logging"
 )
 

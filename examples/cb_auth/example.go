@@ -3,10 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/couchbase/cbauth"
-	"github.com/couchbase/go-couchbase"
 	"log"
 	"net/url"
+
+	"github.com/adamliesko/go-couchbase"
+	"github.com/couchbase/cbauth"
 )
 
 var serverURL = flag.String("serverURL", "http://localhost:9000",

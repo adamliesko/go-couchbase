@@ -19,8 +19,8 @@ import (
 	"sync"
 	"unsafe"
 
-	"github.com/couchbase/gomemcached"        // package name is 'gomemcached'
-	"github.com/couchbase/gomemcached/client" // package name is 'memcached'
+	"github.com/adamliesko/gomemcached"        // package name is 'gomemcached'
+	"github.com/adamliesko/gomemcached/client" // package name is 'memcached'
 )
 
 // HTTPClient to use for REST and view operations.

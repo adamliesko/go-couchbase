@@ -32,10 +32,10 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/couchbase/go-couchbase"
-	"github.com/couchbase/go-couchbase/trace"
-	"github.com/couchbase/gomemcached"
-	"github.com/couchbase/gomemcached/client"
+	"github.com/adamliesko/go-couchbase"
+	"github.com/adamliesko/gomemcached"
+	"github.com/adamliesko/gomemcached/client"
+	"github.com/adamliesko/go-couchbase/trace"
 )
 
 const FlagOpenProducer = uint32(1)

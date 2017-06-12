@@ -4,8 +4,8 @@ import (
 	"database/sql"
 	"flag"
 	"fmt"
-	"github.com/couchbase/go-couchbase"
-	_ "github.com/couchbaselabs/go_n1ql"
+	"github.com/adamliesko/go-couchbase"
+	_ "github.com/adamlieskolabs/go_n1ql"
 	"log"
 )
 

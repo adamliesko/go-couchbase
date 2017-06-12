@@ -9,7 +9,7 @@ import (
 	"text/tabwriter"
 	"time"
 
-	"github.com/couchbase/go-couchbase"
+	"github.com/adamliesko/go-couchbase"
 )
 
 var poolName = flag.String("pool", "default", "Pool to connect to")

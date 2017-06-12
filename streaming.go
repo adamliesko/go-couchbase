@@ -3,7 +3,6 @@ package couchbase
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/couchbase/goutils/logging"
 	"io"
 	"io/ioutil"
 	"math/rand"
@@ -11,6 +10,8 @@ import (
 	"net/http"
 	"time"
 	"unsafe"
+
+	"github.com/couchbase/goutils/logging"
 )
 
 // Bucket auto-updater gets the latest version of the bucket config from
