@@ -709,7 +709,11 @@ func (b *Bucket) WriteCas(k string, flags, exp int, cas uint64, v interface{},
 
 	var res *gomemcached.MCResponse
 	err = b.Do(k, func(mc *memcached.Client, vb uint16) error {
-		res, err = mc.SetCas(vb, k, flags, exp, cas, data)
+		if data == nil {
+			res, err = mc.DelCas(vb, k, cas)
+		} else {
+			res, err = mc.SetCas(vb, k, flags, exp, cas, data)
+		}
 		return err
 	})
 
@@ -939,6 +943,12 @@ func (b *Bucket) GetMeta(k string, flags *int, expiry *int, cas *uint64, seqNo *
 // Delete a key from this bucket.
 func (b *Bucket) Delete(k string) error {
 	return b.Write(k, 0, 0, nil, Raw)
+}
+
+// Delete a key from this bucket with CAS.
+func (b *Bucket) DeleteCas(k string, cas uint64) error {
+	_, res := b.WriteCas(k, 0, 0, cas, nil, 0)
+	return res
 }
 
 // Incr increments the value at a given key by amt and defaults to def if no value present.
