@@ -575,7 +575,7 @@ var ErrKeyExists = errors.New("key exists")
 // before being written. It must be JSON-marshalable and it must not
 // be nil.
 func (b *Bucket) Write(k string, flags, exp int, v interface{},
-	opt WriteOptions) (err error) {
+	opt WriteOptions) (cas uint64, err error) {
 
 	if ClientOpCallback != nil {
 		defer func(t time.Time) {
@@ -587,7 +587,7 @@ func (b *Bucket) Write(k string, flags, exp int, v interface{},
 	if opt&Raw == 0 {
 		data, err = json.Marshal(v)
 		if err != nil {
-			return err
+			return 0, err
 		}
 	} else if v != nil {
 		data = v.([]byte)
@@ -620,7 +620,7 @@ func (b *Bucket) Write(k string, flags, exp int, v interface{},
 		err = b.WaitForPersistence(k, res.Cas, data == nil)
 	}
 
-	return err
+	return res.Cas, err
 }
 
 func (b *Bucket) WriteWithMT(k string, flags, exp int, v interface{},
@@ -776,7 +776,8 @@ func (b *Bucket) WriteCasWithMT(k string, flags, exp int, cas uint64, v interfac
 // Set a value in this bucket.
 // The value will be serialized into a JSON document.
 func (b *Bucket) Set(k string, exp int, v interface{}) error {
-	return b.Write(k, 0, exp, v, 0)
+	_, err := b.Write(k, 0, exp, v, 0)
+	return err
 }
 
 // Set a value in this bucket with with flags
@@ -786,14 +787,15 @@ func (b *Bucket) SetWithMeta(k string, flags int, exp int, v interface{}) (*Muta
 
 // SetRaw sets a value in this bucket without JSON encoding it.
 func (b *Bucket) SetRaw(k string, exp int, v []byte) error {
-	return b.Write(k, 0, exp, v, Raw)
+	_, err := b.Write(k, 0, exp, v, Raw)
+	return err
 }
 
 // Add adds a value to this bucket; like Set except that nothing
 // happens if the key exists.  The value will be serialized into a
 // JSON document.
 func (b *Bucket) Add(k string, exp int, v interface{}) (added bool, err error) {
-	err = b.Write(k, 0, exp, v, AddOnly)
+	_, err = b.Write(k, 0, exp, v, AddOnly)
 	if err == ErrKeyExists {
 		return false, nil
 	}
@@ -803,7 +805,7 @@ func (b *Bucket) Add(k string, exp int, v interface{}) (added bool, err error) {
 // AddRaw adds a value to this bucket; like SetRaw except that nothing
 // happens if the key exists.  The value will be stored as raw bytes.
 func (b *Bucket) AddRaw(k string, exp int, v []byte) (added bool, err error) {
-	err = b.Write(k, 0, exp, v, AddOnly|Raw)
+	_, err = b.Write(k, 0, exp, v, AddOnly|Raw)
 	if err == ErrKeyExists {
 		return false, nil
 	}
@@ -833,7 +835,8 @@ func (b *Bucket) AddRawWithMT(k string, exp int, v []byte) (added bool, mt *Muta
 
 // Append appends raw data to an existing item.
 func (b *Bucket) Append(k string, data []byte) error {
-	return b.Write(k, 0, 0, data, Append|Raw)
+	_, err := b.Write(k, 0, 0, data, Append|Raw)
+	return err
 }
 
 // GetsRaw gets a raw value from this bucket including its CAS
@@ -942,12 +945,13 @@ func (b *Bucket) GetMeta(k string, flags *int, expiry *int, cas *uint64, seqNo *
 
 // Delete a key from this bucket.
 func (b *Bucket) Delete(k string) error {
-	return b.Write(k, 0, 0, nil, Raw)
+	_, err := b.Write(k, 0, 0, nil, Raw)
+	return err
 }
 
 // Delete a key from this bucket with CAS.
 func (b *Bucket) DeleteCas(k string, cas uint64) error {
-	_, res := b.WriteCas(k, 0, 0, cas, nil, 0)
+	_, res := b.WriteCas(k, 0, 0, cas, nil, Raw)
 	return res
 }
 
