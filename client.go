@@ -620,6 +620,10 @@ func (b *Bucket) Write(k string, flags, exp int, v interface{},
 		err = b.WaitForPersistence(k, res.Cas, data == nil)
 	}
 
+	if res == nil {
+		return 0, err
+	}
+
 	return res.Cas, err
 }
 
