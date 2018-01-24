@@ -721,6 +721,10 @@ func (b *Bucket) WriteCas(k string, flags, exp int, cas uint64, v interface{},
 		return err
 	})
 
+	if err != nil {
+		return 0, err
+	}
+
 	if err == nil && (opt&(Persist|Indexable) != 0) {
 		err = b.WaitForPersistence(k, res.Cas, data == nil)
 	}
